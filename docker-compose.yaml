@@ -1,0 +1,18 @@
+services:
+  authentication:
+    build:
+      context: .
+      dockerfile: ./apps/authentication/Dockerfile
+      target: development
+    command: npm run dev authentication
+    env_file:
+      - ./apps/authentication/.env
+    ports:
+      - '5000:5000'
+    volumes:
+      - ../:/backend
+    
+  rabbitmq:
+    image: rabbitmq
+    ports:
+     - 5672:5672
