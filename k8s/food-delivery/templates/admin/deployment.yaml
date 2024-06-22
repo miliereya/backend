@@ -1,33 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: admin
-  name: admin
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: admin
-  template:
-    metadata:
-      labels:
+    labels:
         app: admin
-    spec:
-      containers:
-      - image: 498654679034.dkr.ecr.us-east-1.amazonaws.com/admin
-        name: admin
-        env:
-          - name: MONGO_URI
-            valueFrom:
-              secretKeyRef:
-                name: mongodb
-                key: connectionString
-          - name: HTTP_PORT 
-            value: '5000'
-          - name: ADMIN_HOST
-            value: 'ADMIN'
-          - name: RMQ_URI
-            value: amqp://rabbitmq:5672
-        port:
-        - containerPort: 3004
+    name: admin
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: admin
+    template:
+        metadata:
+            labels:
+                app: admin
+        spec:
+            containers:
+                - image: 498654679034.dkr.ecr.us-east-1.amazonaws.com/admin
+                  name: admin
+                  env:
+                      - name: MONGO_URI
+                        valueFrom:
+                            secretKeyRef:
+                                name: mongodb
+                                key: connectionString
+                      - name: HTTP_PORT
+                        value: '5000'
+                      - name: ADMIN_HOST
+                        value: 'ADMIN'
+                      - name: RMQ_URI
+                        value: amqp://rabbitmq:5672
+                      - name: ADMIN_HOST
+                        value: ADMIN
+                      - name: ORDER_HOST
+                        value: ORDER_HOST
+                  ports:
+                      - containerPort: 5000
