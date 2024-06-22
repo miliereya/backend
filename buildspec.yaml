@@ -1,0 +1,13 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 498654679034.dkr.ecr.us-east-1.amazonaws.com
+  build:
+    commands:
+      - docker build -t admin -f ./apps/order/Dockerfile .
+      - docker tag admin:latest 498654679034.dkr.ecr.us-east-1.amazonaws.com/admin:latest
+  post_build:
+    commands:
+      - docker push 498654679034.dkr.ecr.us-east-1.amazonaws.com/admin:latest

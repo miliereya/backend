@@ -1,17 +1,31 @@
+version: "2"
+
 services:
-  authentication:
+  admin:
     build:
       context: .
-      dockerfile: ./apps/authentication/Dockerfile
+      dockerfile: ./apps/admin/Dockerfile
       target: development
-    command: npm run dev authentication
+    command: npm run dev admin
     env_file:
-      - ./apps/authentication/.env
+      - ./apps/admin/.env
     ports:
       - '5000:5000'
     volumes:
-      - ../:/backend
-    
+      - .:/usr/src/app
+  order:
+    build:
+      context: .
+      dockerfile: ./apps/order/Dockerfile
+      target: development
+    command: npm run dev order
+    env_file:
+      - ./apps/order/.env
+    ports:
+      - '5001:5001'
+    volumes:
+      - .:/usr/src/app
+
   rabbitmq:
     image: rabbitmq
     ports:
