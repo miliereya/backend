@@ -8,6 +8,9 @@ phases:
     commands:
       - docker build -t admin -f ./apps/admin/Dockerfile .
       - docker tag admin:latest 498654679034.dkr.ecr.us-east-1.amazonaws.com/admin:latest
+      - docker build -t order -f ./apps/order/Dockerfile .
+      - docker tag order:latest 498654679034.dkr.ecr.us-east-1.amazonaws.com/order:latest
   post_build:
     commands:
       - docker push 498654679034.dkr.ecr.us-east-1.amazonaws.com/admin:latest
+      - docker push 498654679034.dkr.ecr.us-east-1.amazonaws.com/order:latest
